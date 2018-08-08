@@ -16,19 +16,23 @@
  * limitations under the License.
  *
  */
+
 #ifndef __VOTCA_TOOLS_IDENTITY_H
 #define __VOTCA_TOOLS_IDENTITY_H
+
 #include <exception>
+
 namespace votca {
 namespace tools {
 
 /**
-    \brief Information about Identity
-
-    The identity object is meant to provide functionality for storing the id of
-    an object it primariy meant to be used in child classes and provides a more
-    safety than other imlementations.
-*/
+ * \brief Information about Identity
+ *
+ * The identity object is meant to provide functionality for storing the id of
+ * an object it primariy meant to be used in child classes and provides a more
+ * safety than other imlementations.
+ *
+ */
 template<typename T>
 class Identity {
  private:
@@ -40,14 +44,16 @@ class Identity {
   Identity() : id_set_(false) {}
   /// Constructor that takes initial id
   Identity(const T &id) : id_(id), id_set_(true) {};
+  /// Destructor
+  virtual ~Identity() {};
   /// Gets the id returns error of the id has not been set
-  const T getId() {
+  virtual const T getId() {
     return (id_set_ ? id_ : throw std::runtime_error("ID not set"));
   }
   /// Set the id
-  void setId(T id) { id_set_ = true; id_ = id; }
+  virtual void setId(T id) { id_set_ = true; id_ = id; }
 };
 }
 }
 
-#endif
+#endif // __VOTCA_TOOLS_IDENTITY_H

@@ -40,13 +40,18 @@ class Name {
   bool name_set_{false};
 
  public:
+  /// Constructor
   Name() {};
+  /// Constructor that takes initial string name
   Name(const std::string name) : name_(name), name_set_(true) {};
-  void setName(const std::string name) {
+  /// Destructor
+  virtual ~Name() {};
+  /// Set the name 
+  virtual void setName(const std::string name) {
     name_ = name;
     name_set_ = true;
   }
-  std::string getName() {
+  virtual std::string getName() {
     return (!name_set_ ? throw std::runtime_error("Name not set") : name_);
   }
 };
