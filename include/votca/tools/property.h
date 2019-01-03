@@ -289,7 +289,7 @@ inline T Property::as() const
       std::cerr<<possibleReturns[i]<<" ";
     }
     std::cerr<<std::endl;
-    throw runtime_error((boost::format("Error: %s is not allowed") %key).str());
+    throw std::runtime_error((boost::format("Error: %s is not allowed") %key).str());
 }
      return result;
   }
