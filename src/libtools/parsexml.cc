@@ -23,6 +23,8 @@
 #include <expat.h>
 #include <votca/tools/parsexml.h>
 
+using namespace std;
+
 namespace votca { namespace tools {
 
 void start_hndl(void *data, const char *el, const char **attr) {
