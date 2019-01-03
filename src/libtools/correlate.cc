@@ -17,6 +17,8 @@
 #include <votca/tools/correlate.h>
 #include <math.h>
 
+using namespace std;
+
 namespace votca { namespace tools {
 
 /**
@@ -35,7 +37,7 @@ void Correlate::CalcCorrelations(DataCollection<double>::selection *data)
     xm/=(double)N;
     
     for(size_t v=1; v<data->size(); v++) {
-        pair<string, double> p("do_names", 0);        
+      pair<string, double> p("do_names", 0);        
         double ym(0), ysq(0);
         
         for(size_t i=0; i<N; i++) {
