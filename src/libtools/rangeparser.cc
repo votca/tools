@@ -22,6 +22,8 @@
 #include <functional>
 #include <stdexcept>
 
+using namespace std;
+
 namespace votca { namespace tools {
 
 RangeParser::RangeParser()
