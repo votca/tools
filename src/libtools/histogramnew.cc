@@ -26,6 +26,7 @@ namespace votca {
       _min = _max = _step = _step_p = 0;
       _weight = 1.;
       _periodic = false;
+      _nbins = 100;
     }
 
     HistogramNew::HistogramNew(const HistogramNew &hist)
@@ -34,7 +35,8 @@ namespace votca {
     _step(hist._step),
     _step_p(hist._step_p),
     _weight(hist._weight),
-    _periodic(hist._periodic) {
+    _periodic(hist._periodic),
+    _nbins(hist._nbins) {
     }
 
     void HistogramNew::Initialize_(double min, double max) {
