@@ -273,7 +273,7 @@ inline T Property::as() const
 	    result = this->get(key).as<T>();
             }
     else{
-             throw runtime_error((boost::format("Error: %s is not found") %key).str());
+             throw std::runtime_error((boost::format("Error: %s is not found") %key).str());
             }
      return result;
   }
@@ -284,11 +284,11 @@ inline T Property::as() const
      T result;
      result=ifExistsReturnElseThrowRuntimeError<T>(key);
      if(std::find(possibleReturns.begin(), possibleReturns.end(), result) == possibleReturns.end()){
-    cerr<<"Allowed options are: ";
+       std::cerr<<"Allowed options are: ";
     for(unsigned i=0;i<possibleReturns.size();++i){
-        cerr<<possibleReturns[i]<<" ";
+      std::cerr<<possibleReturns[i]<<" ";
     }
-    cerr<<endl;
+    std::cerr<<std::endl;
     throw runtime_error((boost::format("Error: %s is not allowed") %key).str());
 }
      return result;
