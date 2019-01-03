@@ -22,6 +22,8 @@
 #include <fftw3.h>
 #endif
 
+using namespace std;
+
 namespace votca { namespace tools {
 
 /**
