@@ -17,6 +17,8 @@
 #include <stdexcept>
 #include <votca/tools/database.h>
 
+using namespace std;
+
 namespace votca { namespace tools {
 
 Database::Database()
