@@ -23,13 +23,11 @@
 
 namespace votca { namespace tools {
 
-using namespace std;
-
 /**
  *  \brief  SQLite Database wrapper
  *
  *
- */
+ **/
 class Database
 {
 public:
@@ -49,8 +47,8 @@ public:
          *  doesn't exist already, onCreate is called. If it exists but in an
          *  older Version, onUpgrade is called to bring it to the most current version.
          */
-        void OpenHelper(string file);
-        void Open(string file, int flags = SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE);
+        void OpenHelper(std::string file);
+        void Open(std::string file, int flags = SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE);
 	void Close(void);
 
         /**
@@ -72,9 +70,9 @@ public:
         virtual void onUpgrade(int oldVersion, int newVersion);
 
 
-	void Exec(string sql);
+	void Exec(std::string sql);
 
-	Statement *Prepare(string sql);
+	Statement *Prepare(std::string sql);
 
         int LastInsertRowId();
         void BeginTransaction() { Exec("BEGIN TRANSACTION;"); }
