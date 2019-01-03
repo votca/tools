@@ -21,12 +21,9 @@
 #include <string>
 #include <stack>
 #include <map>
-#include <list>
 
 namespace votca { namespace tools {
     
-using namespace std;
-
 /**
     \brief XML SAX parser (wrapper for expat)
 
@@ -55,7 +52,7 @@ public:
      * Make sure to set the corresponding element handler before to redirect
      * element handling.
      */
-    void Open(const string &_filename);
+    void Open(const std::string &_filename);
 
     /**
      * \brief Set handler for next element (only member functions possible)
@@ -66,7 +63,7 @@ public:
      * say what is coming next. Optionally call IgnoreElement
      */
     template<typename T>
-    void NextHandler(T *object, void (T::*fkt)(const string &, map<string, string> &));
+    void NextHandler(T *object, void (T::*fkt)(const std::string &, std::map<std::string, std::string> &));
 
     /**
      * \brief Ignore the content of this elements and all of its childs
@@ -74,31 +71,31 @@ public:
     void IgnoreChilds();
     
 private:
-    // virtual void ParseRoot(const string &el, map<string, string> &attr);
-    void ParseIgnore(const string &el, map<string, string> &attr);
+    // virtual void ParseRoot(const string &el, std::map<string, string> &attr);
+    void ParseIgnore(const std::string &el, std::map<std::string, std::string> &attr);
 
     
     /// end element callback for xml parser
-    void StartElemHndl(const string &el, map<string, string> &attr);
+    void StartElemHndl(const std::string &el, std::map<std::string, std::string> &attr);
     /// end element callback for xml parser
-    void EndElemHndl(const string &el);
+    void EndElemHndl(const std::string &el);
 
 
     class Functor {
     public:
         Functor() {}
-        virtual void operator()(const string &, map<string, string> &) = 0;
+        virtual void operator()(const std::string &, std::map<std::string, std::string> &) = 0;
         virtual ~Functor() {};
     };
 
     template<typename T>
     class FunctorMember : public Functor {
     public:
-        typedef void (T::*fkt_t)(const string &, map<string, string> &);
+        typedef void (T::*fkt_t)(const std::string &, std::map<std::string, std::string> &);
 
         FunctorMember(T* cls, fkt_t fkt) : _cls(cls), _fkt(fkt) {}
         
-        void operator()(const string &el, map<string, string> & attr) {
+        void operator()(const std::string &el, std::map<std::string, std::string> & attr) {
             (_cls->*_fkt)(el, attr);
         }
         
@@ -107,7 +104,7 @@ private:
         fkt_t _fkt;
     };
 
-    stack<Functor *> _stack_handler;
+    std::stack<Functor *> _stack_handler;
     Functor *_handler;
 
     friend void start_hndl(void *data, const char *el, const char **attr);
@@ -120,7 +117,7 @@ inline void ParseXML::IgnoreChilds()
 }
 
 template<typename T>
-inline void ParseXML::NextHandler(T *object, void (T::*fkt)(const string &, map<string, string> &))
+inline void ParseXML::NextHandler(T *object, void (T::*fkt)(const std::string &, std::map<std::string, std::string> &))
 {
     _handler = dynamic_cast<Functor*>(new FunctorMember<T>(object, fkt));
     _stack_handler.push(_handler);
