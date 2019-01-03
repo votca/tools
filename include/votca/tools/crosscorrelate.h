@@ -24,8 +24,6 @@
 
 namespace votca { namespace tools {
 
-using namespace std;
-
 /**
     \brief class to calculate cross correlkations and autocorrelations
 
@@ -54,30 +52,30 @@ class CrossCorrelate
         void AutoCorrelate(DataCollection<double>::selection *data, bool average = false);
 
         // Calculates only the Fourier trafo
-        void FFTOnly(vector <double>& ivec);
+        void FFTOnly(std::vector <double>& ivec);
         
         // Calculates only the Discrete Cosine trafo
-        void DCTOnly(vector <double>& ivec);
+        void DCTOnly(std::vector <double>& ivec);
         
         // Calculates Fourier trafo and then auto correlation
-        void AutoFourier(vector <double>& ivec);
+        void AutoFourier(std::vector <double>& ivec);
         
         // Calculates Discrete Cosine trafo and then auto correlation
-        void AutoCosine(vector <double>& ivec);
+        void AutoCosine(std::vector <double>& ivec);
         
         // Calculates auto correlation via two Fourier trafos
-        void AutoCorr(vector <double>& ivec);
+        void AutoCorr(std::vector <double>& ivec);
         
-        vector<double> &getData() { return _corrfunc; }
+        std::vector<double> &getData() { return _corrfunc; }
     private:
-        vector<double> _corrfunc;
+        std::vector<double> _corrfunc;
 };
 
-inline ostream& operator<<(ostream& out, CrossCorrelate &c)
+inline std::ostream& operator<<(std::ostream& out, CrossCorrelate &c)
 {
-    vector<double> &data = c.getData();
+  std::vector<double> &data = c.getData();
     for(size_t i=0; i<data.size(); i++) {
-        out << i << " " << c.getData()[i] << endl;
+        out << i << " " << c.getData()[i] << std::endl;
     }
     return out;
 }
