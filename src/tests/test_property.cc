@@ -21,11 +21,10 @@
 #include <boost/test/unit_test.hpp>
 #include <votca/tools/property.h>
 
+using namespace std;
 using namespace votca::tools;
 
 BOOST_AUTO_TEST_SUITE(property_test)
-
-
 
 BOOST_AUTO_TEST_CASE(eigen_test) {
     Property prop;
