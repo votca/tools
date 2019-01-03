@@ -67,7 +67,7 @@ class Histogram
             double _min, _max;
             bool _periodic;
             bool _normalize;
-            string _scale;
+            std::string _scale;
             
             options_t() {
                 _n=101;
