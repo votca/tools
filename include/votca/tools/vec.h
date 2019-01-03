@@ -27,7 +27,6 @@
 #include "tokenizer.h"
 
 namespace votca { namespace tools {
-    using namespace std;
 /**
     \brief Vector class for a 3 component vector
 
