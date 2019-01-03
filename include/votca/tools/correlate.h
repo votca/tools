@@ -48,7 +48,7 @@ class Correlate
         std::vector< std::pair<std::string,double> > _corr;
 };
 
-inline ostream& operator<<(ostream& out, Correlate &c)
+inline std::ostream& operator<<(std::ostream& out, Correlate &c)
 {
   std::vector< std::pair<std::string,double> > &data = c.getData();
     for(size_t i=0; i<data.size(); i++) {
