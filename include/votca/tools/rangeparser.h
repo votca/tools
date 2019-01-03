@@ -24,8 +24,6 @@
 
 namespace votca { namespace tools {
 
-using namespace std;
-
 /**
  * \brief RangeParser
  *
@@ -36,7 +34,7 @@ class RangeParser
 public:
     RangeParser();
     
-    void Parse(string range);
+    void Parse(std::string range);
 
     void Add(int begin, int end, int stride=1);
     
@@ -77,8 +75,8 @@ public:
        
 private:
     
-    void ParseBlock(string block);
-    int ToNumber(string str);
+    void ParseBlock(std::string block);
+    int ToNumber(std::string str);
         
     list< block_t > _blocks;    
     
