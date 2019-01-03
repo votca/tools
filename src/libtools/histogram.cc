@@ -20,6 +20,8 @@
 #include <numeric>
 #include <votca/tools/histogram.h>
 
+using namespace std;
+
 namespace votca { namespace tools {
 
 Histogram::Histogram()
