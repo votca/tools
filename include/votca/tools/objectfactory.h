@@ -19,14 +19,10 @@
 #define	_objectfactory_H
 
 #include <map>
-#include <list>
-#include <iostream>
 #include <stdexcept>
 #include <boost/lexical_cast.hpp>
 
 namespace votca { namespace tools {
-
-using namespace std;
 
 /**
     \brief template class for object factory
@@ -46,7 +42,7 @@ private:
 public:
 
     typedef T abstract_type;
-    typedef map<key_t, creator_t> assoc_map;
+    typedef std::map<key_t, creator_t> assoc_map;
     
     ObjectFactory() {}
     ~ObjectFactory() {};
