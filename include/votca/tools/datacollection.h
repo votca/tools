@@ -183,7 +183,7 @@ typename DataCollection<T>::selection *DataCollection<T>::select(
   return sel;
 }
 
-ostream &operator<<(ostream &out, DataCollection<double>::selection &sel);
+std::ostream &operator<<(std::ostream &out, DataCollection<double>::selection &sel);
 }
 }
 
