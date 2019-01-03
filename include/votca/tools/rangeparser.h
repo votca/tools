@@ -63,8 +63,8 @@ public:
     private:
         RangeParser *_parent;
         
-        iterator(RangeParser *, list<block_t>::iterator);
-        list<block_t>::iterator _block;
+        iterator(RangeParser *, std::list<block_t>::iterator);
+        std::list<block_t>::iterator _block;
         int _current;
         
         friend class RangeParser;
@@ -78,7 +78,7 @@ private:
     void ParseBlock(std::string block);
     int ToNumber(std::string str);
         
-    list< block_t > _blocks;    
+    std::list< block_t > _blocks;    
     
     //bool _has_begin, _has_end;
     //int _begin, _end;
@@ -102,7 +102,7 @@ inline RangeParser::iterator RangeParser::end()
     return RangeParser::iterator(this, _blocks.end());
 }
 
-inline RangeParser::iterator::iterator(RangeParser *parent, list<block_t>::iterator block)
+inline RangeParser::iterator::iterator(RangeParser *parent, std::list<block_t>::iterator block)
     : _parent(parent), _block(block)
 {
     if(block != parent->_blocks.end())
