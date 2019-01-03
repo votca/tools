@@ -103,7 +103,7 @@ inline T* ObjectFactory<key_t, T>::Create(const key_t &key)
     if (it != _objects.end())
         return (it->second)();
     else
-        throw std::runtime_error("factory key " + boost::lexical_cast<string>(key) + " not found.");
+        throw std::runtime_error("factory key " + boost::lexical_cast<std::string>(key) + " not found.");
 }
 
 /*template<typename key_t, typename T>
