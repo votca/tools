@@ -110,6 +110,14 @@ class Graph {
 
   std::string getId() { return id_; }
 
+  std::vector<Edge> getNeighEdges(int vertex) { return edge_container_.getNeighEdges(vertex);}
+
+  std::vector<int> getVertices() { return edge_container_.getVertices();}
+  int getMaxDegree() { return edge_container_.getMaxDegree();}
+
+  std::vector<int> getVerticesDegree(int degree) { return edge_container_.getVerticesDegree(degree); }
+
+  bool vertexExist(int vertex) { return edge_container_.vertexExist(vertex);}
   friend std::ostream& operator<<(std::ostream& os, const Graph g);
 };
 
