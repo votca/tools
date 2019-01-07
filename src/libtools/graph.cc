@@ -121,6 +121,19 @@ vector<pair<int, GraphNode>> Graph::getNodes(void) {
   return vec_nodes;
 }
 
+vector<int> Graph::getJunctions(){
+  vector<int> junctions;
+  int max_degree = edge_container_.getMaxDegree();
+  for(auto degree=3; degree<=max_degree;++degree){
+    auto vertices = edge_container_.getVerticesDegree(degree);
+    junctions.insert(
+        junctions.end(),
+        vertices.begin(),
+        vertices.end());
+  }
+  return junctions;
+}
+
 void Graph::calcId_() {
   auto nodes = getNodes();
   sort(nodes.begin(), nodes.end(), cmpVertNodePair);

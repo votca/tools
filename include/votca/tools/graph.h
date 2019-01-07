@@ -102,6 +102,9 @@ class Graph {
   void setNode(int vert, GraphNode gn);
   void setNode(std::pair<int, GraphNode> p_gn);
 
+  /// Gets all vertices with degree of 3 or greater
+  std::vector<int> getJunctions();
+
   /// Return a copy of the graph node at vertex 'vert'
   GraphNode getNode(int vert);
 
