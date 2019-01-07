@@ -40,7 +40,7 @@ namespace tools {
 class GraphNode;
 
 class Graph {
- private:
+ protected:
 
   EdgeContainer edge_container_;
 
@@ -109,6 +109,8 @@ class Graph {
   std::vector<std::pair<int, GraphNode>> getNodes(void);
 
   std::string getId() { return id_; }
+
+  virtual std::vector<Edge> getEdges() {return edge_container_.getEdges();}
 
   std::vector<Edge> getNeighEdges(int vertex) { return edge_container_.getNeighEdges(vertex);}
 
