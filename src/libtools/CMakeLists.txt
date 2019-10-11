@@ -27,7 +27,7 @@ find_package(BLAS)
 
 set_target_properties(votca_tools PROPERTIES SOVERSION ${SOVERSION})
 target_link_libraries(votca_tools PUBLIC Boost::boost Boost::program_options Eigen3::Eigen PRIVATE
-	Boost::filesystem Boost::system EXPAT::EXPAT Threads::Threads VOTCA::Blas ${MATH_LIBRARIES})
+	Boost::filesystem Boost::system EXPAT::EXPAT Threads::Threads ${MATH_LIBRARIES})
 
 
 
@@ -39,6 +39,9 @@ if(TARGET MKL::MKL)
   foreach(_TGT Interface ThreadLayer)
     get_target_property(MKL_${_TGT}_IMPORTED_LOCATION MKL::${_TGT} IMPORTED_LOCATION)
   endforeach()
+endif()
+if(TARGET VOTCA::Blas)
+  target_link_libraries(votca_tools PUBLIC VOTCA::Blas)
 endif()
 if(FFTW3_FOUND)
   target_link_libraries(votca_tools PRIVATE FFTW3::FFTW3)
