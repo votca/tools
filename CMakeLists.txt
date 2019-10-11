@@ -85,6 +85,10 @@ if (NOT MKL_FOUND)
 else()
   set (BLAS FALSE)
 endif()
+if(BLAS)
+  add_library(VOTCA::Blas UNKNOWN IMPORTED)
+  set_target_properties(VOTCA::Blas PROPERTIES IMPORTED_LOCATION "${BLAS_LIBRARIES}")
+endif()
 
 
 option(WITH_FFTW "Use FFTW3, disabling leads to reduced functionality!" ON)

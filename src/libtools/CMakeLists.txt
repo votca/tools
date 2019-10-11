@@ -27,7 +27,7 @@ find_package(BLAS)
 
 set_target_properties(votca_tools PROPERTIES SOVERSION ${SOVERSION})
 target_link_libraries(votca_tools PUBLIC Boost::boost Boost::program_options Eigen3::Eigen PRIVATE
-	Boost::filesystem Boost::system EXPAT::EXPAT Threads::Threads ${MATH_LIBRARIES} ${BLAS_LIBRARIES})
+	Boost::filesystem Boost::system EXPAT::EXPAT Threads::Threads VOTCA::Blas ${MATH_LIBRARIES})
 
 
 
