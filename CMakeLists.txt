@@ -82,7 +82,6 @@ if (NOT MKL_FOUND)
   endif()
 endif()
 
-
 option(WITH_FFTW "Use FFTW3, disabling leads to reduced functionality!" ON)
 if (WITH_FFTW)
   find_package(FFTW3 REQUIRED)
