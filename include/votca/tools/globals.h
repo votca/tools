@@ -44,7 +44,6 @@ struct globals {
   /// If Eigen is overloaded with unspecified BLAS
   static bool VOTCA_BLAS;
 
-  
   /// man pages format strings
   struct man {
     static std::string option;

@@ -36,7 +36,6 @@ bool globals::VOTCA_BLAS = true;
 bool globals::VOTCA_BLAS = false;
 #endif
 
-  
 std::string globals::man::option(".TP\n\\fB%1%\\fR\n%2%\n");
 
 std::string globals::man::header(".TH \"%1%\" 1 \"\" \"Version: %2%\"\n\n");
