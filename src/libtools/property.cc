@@ -75,14 +75,6 @@ Property &Property::get(const string &key) {
   return const_cast<Property &>(static_cast<const Property &>(*this).get(key));
 }
 
-Property &Property::getOradd(const std::string &key) {
-  if (exists(key)) {
-    return get(key);
-  } else {
-    return add(key, "");
-  }
-}
-
 std::vector<const Property *> Property::Select(const string &filter) const {
   Tokenizer tok(filter, ".");
   std::vector<const Property *> selection;

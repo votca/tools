@@ -86,17 +86,6 @@ class Property {
   const Property &get(const std::string &key) const;
 
   /**
-   * \brief adds new or gets existing property
-   * @param key identifier
-   * @return Reference to property object
-   *
-   * This function tries to find a property specified by key separated
-   * by "." to step down hierarchy. If the property is not
-   * found a property with that name is added and returned.
-   */
-  Property &getOradd(const std::string &key);
-
-  /**
    * \brief check whether property exists
    * @param key identifier
    * @return true or false
@@ -142,10 +131,6 @@ class Property {
    */
   template <typename T>
   T as() const;
-
-  template <typename T>
-  T ifExistsReturnElseReturnDefault(const std::string &key,
-                                    T defaultvalue) const;
 
   template <typename T>
   T ifExistsReturnElseThrowRuntimeError(const std::string &key) const;
@@ -284,18 +269,6 @@ inline bool Property::as<bool>() const {
 template <typename T>
 inline T Property::as() const {
   return lexical_cast<T>(_value, "wrong type in " + _path + "." + _name + "\n");
-}
-
-template <typename T>
-inline T Property::ifExistsReturnElseReturnDefault(const std::string &key,
-                                                   T defaultvalue) const {
-  T result;
-  if (this->exists(key)) {
-    result = this->get(key).as<T>();
-  } else {
-    result = defaultvalue;
-  }
-  return result;
 }
 
 template <typename T>

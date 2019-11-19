@@ -164,16 +164,14 @@ boost::program_options::options_description_easy_init
 void Application::ParseCommandLine(int argc, char **argv) {
   namespace po = boost::program_options;
 
-  std::map<string, boost::program_options::options_description>::iterator iter;
-
   // default options should be added to visible (the rest is handled via a map))
   _visible_options.add(_op_desc);
 
   // add all categories to list of available options
-  for (iter = _op_groups.begin(); iter != _op_groups.end(); ++iter) {
-    _op_desc.add(iter->second);
-    if (iter->first != "Hidden") {
-      _visible_options.add(iter->second);
+  for (auto &opt : _op_groups) {
+    _op_desc.add(opt.second);
+    if (opt.first != "Hidden") {
+      _visible_options.add(opt.second);
     }
   }
 
