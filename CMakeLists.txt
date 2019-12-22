@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 
 project(votca-tools)
 
-set(PROJECT_VERSION "1.6-dev")
+set(PROJECT_VERSION "1.7-dev")
 string(REGEX REPLACE "^[1-9]+\\.([1-9]+).*$" "\\1" SOVERSION "${PROJECT_VERSION}")
 if (NOT ${SOVERSION} MATCHES "[1-9]+")
   message(FATAL_ERROR "Could not determind SOVERSION from ${PROJECT_VERSION}")
@@ -65,31 +65,17 @@ add_custom_target(manpages ALL)
 ########################################################################
 set(MKL_THREAD_LAYER "Intel OpenMP" CACHE STRING "The thread layer to choose for MKL")
 find_package(MKL)
-if (MKL_FOUND)
-  set (MKL TRUE )
-else()
-  set (MKL FALSE )
-endif()
 
 find_package(Eigen3 3.3.0 NO_MODULE REQUIRED)
 message(STATUS "Found Eigen3: ${Eigen3_DIR}")
 
-if (NOT MKL_FOUND)
-  set (BLAS FALSE)
-  find_package(BLAS)
-  if (BLAS_FOUND)
-     set (BLAS TRUE)
-     message(STATUS "Found Blas: ${BLAS_LIBRARIES}")
-  endif()
+option(WITH_BLAS "Using Blas in Eigen3" OFF)
+if (NOT MKL_FOUND AND WITH_BLAS)
+  find_package(BLAS REQUIRED)
+  message(STATUS "Found Blas: ${BLAS_LIBRARIES}")
 endif()
 
-option(WITH_FFTW "Use FFTW3, disabling leads to reduced functionality!" ON)
-if (WITH_FFTW)
-  find_package(FFTW3 REQUIRED)
-else(WITH_FFTW)
-  #used in votca_config.h
-  set(NOFFTW TRUE)
-endif(WITH_FFTW)
+find_package(FFTW3)
 
 ########################################################################
 # Basic system tests (standard libraries, headers, functions, types)   #

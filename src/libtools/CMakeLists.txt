@@ -1,9 +1,6 @@
 find_package(EXPAT REQUIRED)
 
 file(GLOB VOTCA_SOURCES *.cc)
-file(GLOB NOT_VOTCA_SOURCES version_nb.cc)
-file(GLOB_RECURSE VOTCA_SQL_SOURCES database.cc statement.cc)
-list(REMOVE_ITEM VOTCA_SOURCES ${NOT_VOTCA_SOURCES} ${VOTCA_SQL_SOURCES})
 
 add_library(votca_tools ${VOTCA_SOURCES} ${VOTCA_LINALG_SOURCES})
 
@@ -34,10 +31,10 @@ if(TARGET MKL::MKL)
     get_target_property(MKL_${_TGT}_IMPORTED_LOCATION MKL::${_TGT} IMPORTED_LOCATION)
   endforeach()
 endif()
-if(BLAS)
+if(BLAS_FOUND)
   target_link_libraries(votca_tools PUBLIC ${BLAS_LIBRARIES})
 endif()
-if(FFTW3_FOUND)
+if(TARGET FFTW3::FFTW3)
   target_link_libraries(votca_tools PRIVATE FFTW3::FFTW3)
 endif()
 install(TARGETS votca_tools EXPORT VOTCA_TOOLS_Targets

@@ -22,13 +22,17 @@
 
 #include <votca/tools/votca_config.h>
 
-#if defined(MKL)
+#ifdef MKL_FOUND
 #include <mkl.h>
 #define EIGEN_USE_MKL_ALL
 #endif
 
-#if defined(BLAS)
+#if BLAS_FOUND
 #define EIGEN_USE_BLAS
+#endif
+
+#ifdef FFTW3_FOUND
+#define EIGEN_FFTW_DEFAULT
 #endif
 
 //! Macro to detect strictly gcc.
@@ -49,6 +53,7 @@
 #endif
 #include <Eigen/Eigen>
 #include <unsupported/Eigen/CXX11/Tensor>
+#include <unsupported/Eigen/FFT>
 #if (defined STRICT_GNUC) && GCC_VERSION > 70000
 #pragma GCC diagnostic pop
 #endif

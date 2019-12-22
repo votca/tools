@@ -20,9 +20,9 @@
 #ifndef VOTCA_TOOLS_CALCULATOR_H
 #define VOTCA_TOOLS_CALCULATOR_H
 
-#include <votca/tools/globals.h>
-#include <votca/tools/property.h>
-#include <votca/tools/propertyiomanipulator.h>
+#include "globals.h"
+#include "property.h"
+#include "propertyiomanipulator.h"
 
 namespace votca {
 namespace tools {
@@ -32,14 +32,14 @@ namespace tools {
  *
  * Calculators are grouped in CalculatorFactories and are run by Threads
  * or Applications. Every calculator has a description (an XML file) installed
- * in VOTCASHARE which is used to compile HELP and run TESTSUITE.
+ * in VOTCASHARE which is used to compile HELP.
  * This XML file also contains default values.
  *
  */
 class Calculator {
  public:
-  Calculator() {}
-  virtual ~Calculator() {}
+  Calculator() = default;
+  virtual ~Calculator() = default;
   /**
    * \brief Calculator name
    *
@@ -50,14 +50,6 @@ class Calculator {
    * @return calculator name
    */
   virtual std::string Identify() = 0;
-  /**
-   * \brief reads default options from an XML file in VOTCASHARE
-   *
-   * Help files for calculators are installed in the VOTCASHARE folder
-   * These files also contain default values (default attribute)
-   *
-   */
-  void LoadDefaults();
   /**
    * \brief Initializes a calculator from an XML file with options
    *
@@ -75,7 +67,7 @@ class Calculator {
    * @param nThreads number of threads running this calculator
    *
    */
-  void setnThreads(unsigned int nThreads) {
+  void setnThreads(Index nThreads) {
     _nThreads = nThreads;
     _maverick = (_nThreads == 1) ? true : false;
   }
@@ -95,65 +87,11 @@ class Calculator {
   void UpdateWithDefaults(Property &options, std::string package = "tools");
 
  protected:
-  unsigned int _nThreads;
+  Index _nThreads;
   bool _maverick;
 
   void AddDefaults(Property &p, const Property &defaults);
 };
-
-inline void Calculator::LoadDefaults() {}
-
-inline void Calculator::UpdateWithDefaults(Property &options,
-                                           std::string package) {
-
-  // copy options from the object supplied by the Application
-  std::string id = Identify();
-  Property options_id = options.get("options." + id);
-
-  // add default values if specified in VOTCASHARE
-  char *votca_share = getenv("VOTCASHARE");
-  if (votca_share == NULL)
-    throw std::runtime_error("VOTCASHARE not set, cannot open help files.");
-  // load the xml description of the calculator (with defaults and test values)
-  std::string xmlFile = std::string(getenv("VOTCASHARE")) + std::string("/") +
-                        package + std::string("/xml/") + id +
-                        std::string(".xml");
-
-  Property defaults, defaults_all;
-  defaults_all.LoadFromXML(xmlFile);
-  defaults = defaults_all.get("options." + id);
-
-  // if a value not given or a tag not present, provide default values
-  AddDefaults(options_id, defaults);
-
-  // output calculator options
-  std::string indent("          ");
-  int level = 1;
-  votca::tools::PropertyIOManipulator IndentedText(PropertyIOManipulator::TXT,
-                                                   level, indent);
-  if (tools::globals::verbose) {
-    std::cout << "\n... ... options\n"
-              << IndentedText << options_id << "... ... options\n"
-              << std::flush;
-  }
-}
-
-inline void Calculator::AddDefaults(Property &p, const Property &defaults) {
-
-  for (const Property &prop : defaults) {
-    std::string name = prop.path() + "." + prop.name();
-
-    Property rootp = *p.begin();
-    if (prop.hasAttribute("default")) {
-      if (rootp.exists(name)) {
-        if (rootp.HasChildren()) rootp.value() = prop.value();
-      } else {
-        rootp.add(prop.name(), prop.value());
-      }
-    }
-    AddDefaults(p, prop);
-  }
-}
 
 }  // namespace tools
 }  // namespace votca
