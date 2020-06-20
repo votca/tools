@@ -32,8 +32,7 @@ namespace tools {
 
 class GraphNode;
 
-bool nodeForEveryVertex_(vector<Index> vertices,
-                         unordered_map<Index, GraphNode> nodes) {
+bool nodeForEveryVertex_(vector<Index> vertices, unordered_map<Index, GraphNode> nodes) {
   for (const Index vertex : vertices) {
     if (nodes.count(vertex) == 0) {
       return false;
