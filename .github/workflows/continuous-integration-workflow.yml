@@ -48,6 +48,34 @@ jobs:
             toolchain: gnu
             cmake_build_type: Release
             module_build: true
+          - distro: fedora_gmx2019
+            toolchain: gnu
+            cmake_build_type: Release
+          - distro: fedora_gmx2019
+            toolchain: clang
+            cmake_build_type: Release
+          - distro: fedora_gmx2019_d
+            toolchain: gnu
+            cmake_build_type: Release
+          - distro: fedora_gmx2019_d
+            toolchain: clang
+            cmake_build_type: Release
+          - distro: fedora_gmx2020
+            toolchain: gnu
+            cmake_build_type: Release
+            no_regression_testing: true
+          - distro: fedora_gmx2020
+            toolchain: clang
+            cmake_build_type: Release
+            no_regression_testing: true
+          - distro: fedora_gmx2020_d
+            toolchain: gnu
+            cmake_build_type: Release
+            no_regression_testing: true
+          - distro: fedora_gmx2020_d
+            toolchain: clang
+            cmake_build_type: Release
+            no_regression_testing: true
     runs-on: ubuntu-latest
     container: votca/buildenv:${{ matrix.distro }}
     steps:
