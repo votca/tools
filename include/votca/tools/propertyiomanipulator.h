@@ -53,11 +53,11 @@ class PropertyIOManipulator {
     return os;
   }
 
-  const Type &getType() { return _type; }
+  const Type &getType() const { return _type; }
   void setType(Type type) { _type = type; }
-  const Index &getLevel() { return _level; }
+  Index getLevel() const { return _level; }
   void setLevel(Index level) { _level = level; }
-  const std::string &getIndentation() { return _indentation; }
+  const std::string &getIndentation() const { return _indentation; }
   void setIndentation(std::string indentation) { _indentation = indentation; }
   const ColorSchemeBase *getColorScheme() {
     if (!_color_scheme) {

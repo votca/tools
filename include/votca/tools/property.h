@@ -21,7 +21,6 @@
 // Standard includes
 #include <cstdlib>
 #include <iostream>
-#include <list>
 #include <map>
 #include <stdexcept>
 #include <string>
@@ -148,19 +147,8 @@ class Property {
   template <typename T>
   T as() const;
 
-  template <typename T>
-  T ifExistsReturnElseReturnDefault(const std::string &key,
-                                    T defaultvalue) const;
-
-  template <typename T>
-  T ifExistsReturnElseThrowRuntimeError(const std::string &key) const;
-
-  template <typename T>
-  T ifExistsAndinListReturnElseThrowRuntimeError(
-      const std::string &key, std::vector<T> possibleReturns) const;
-
   /**
-   * \brief does the property has childs?
+   * \brief does the property have children?
    * \return true or false
    */
   bool HasChildren() const { return !_map.empty(); }
@@ -233,7 +221,7 @@ class Property {
   template <typename T>
   T getAttribute(const_AttributeIterator it) const;
 
-  void LoadFromXML(std::string filename);
+  void LoadFromXML(const std::string &filename);
 
   static Index getIOindex() { return IOindex; };
 
@@ -249,33 +237,6 @@ class Property {
   static const Index IOindex;
 };
 
-inline Property &Property::set(const std::string &key,
-                               const std::string &value) {
-  Property &p = get(key);
-  p.value() = value;
-  return p;
-}
-
-inline Property &Property::add(const std::string &key,
-                               const std::string &value) {
-  std::string path = _path;
-  if (path != "") {
-    path = path + ".";
-  }
-  _properties.push_back(Property(key, value, path + _name));
-  _map[key] = Index(_properties.size()) - 1;
-  return _properties.back();
-}
-
-inline bool Property::exists(const std::string &key) const {
-  try {
-    get(key);
-  } catch (std::exception &) {
-    return false;
-  }
-  return true;
-}
-
 // TO DO: write a better function for this!!!!
 template <>
 inline bool Property::as<bool>() const {
@@ -289,50 +250,6 @@ inline bool Property::as<bool>() const {
 template <typename T>
 inline T Property::as() const {
   return lexical_cast<T>(_value, "wrong type in " + _path + "." + _name + "\n");
-}
-
-template <typename T>
-inline T Property::ifExistsReturnElseReturnDefault(const std::string &key,
-                                                   T defaultvalue) const {
-  T result;
-  if (this->exists(key)) {
-    result = this->get(key).as<T>();
-  } else {
-    result = defaultvalue;
-  }
-  return result;
-}
-
-template <typename T>
-inline T Property::ifExistsReturnElseThrowRuntimeError(
-    const std::string &key) const {
-  T result;
-  if (this->exists(key)) {
-    result = this->get(key).as<T>();
-  } else {
-    throw std::runtime_error(
-        (boost::format("Error: %s is not found") % key).str());
-  }
-  return result;
-}
-
-template <typename T>
-inline T Property::ifExistsAndinListReturnElseThrowRuntimeError(
-    const std::string &key, std::vector<T> possibleReturns) const {
-  T result;
-  result = ifExistsReturnElseThrowRuntimeError<T>(key);
-  if (std::find(possibleReturns.begin(), possibleReturns.end(), result) ==
-      possibleReturns.end()) {
-    std::stringstream s;
-    s << "Allowed options are: ";
-    for (Index i = 0; i < Index(possibleReturns.size()); ++i) {
-      s << possibleReturns[i] << " ";
-    }
-    s << std::endl;
-    throw std::runtime_error(
-        s.str() + (boost::format("Error: %s is not allowed") % key).str());
-  }
-  return result;
 }
 
 template <>
@@ -368,7 +285,7 @@ inline Eigen::Vector3d Property::as<Eigen::Vector3d>() const {
 template <>
 inline std::vector<Index> Property::as<std::vector<Index> >() const {
   std::vector<Index> tmp;
-  Tokenizer tok(as<std::string>(), " ,");
+  Tokenizer tok(as<std::string>(), " ,\n\t");
   tok.ConvertToVector<Index>(tmp);
   return tmp;
 }
@@ -382,8 +299,8 @@ inline std::vector<double> Property::as<std::vector<double> >() const {
 }
 
 inline bool Property::hasAttribute(const std::string &attribute) const {
-  std::map<std::string, std::string>::const_iterator it;
-  it = _attributes.find(attribute);
+  std::map<std::string, std::string>::const_iterator it =
+      _attributes.find(attribute);
   if (it == _attributes.end()) {
     return false;
   }
@@ -405,9 +322,8 @@ inline T Property::getAttribute(
 
 template <typename T>
 inline T Property::getAttribute(const std::string &attribute) const {
-  std::map<std::string, std::string>::const_iterator it;
-
-  it = _attributes.find(attribute);
+  std::map<std::string, std::string>::const_iterator it =
+      _attributes.find(attribute);
 
   if (it != _attributes.end()) {
     return lexical_cast<T>(_attributes.at(attribute),
