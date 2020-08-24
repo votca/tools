@@ -1,3 +1,5 @@
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fvotca%2Ftools.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fvotca%2Ftools?ref=badge_shield)
+
 |Codacy Badge| |codecov| |CI| |DOI|
 
 This is the tools module of the VOTCA package.
@@ -14,3 +16,7 @@ You can contact the VOTCA Development Team at devs@votca.org.
    :target: https://github.com/votca/votca/actions?query=workflow%3ACI+branch%3Amaster
 .. |DOI| image:: https://zenodo.org/badge/23848711.svg
    :target: https://zenodo.org/badge/latestdoi/23848711
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fvotca%2Ftools.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fvotca%2Ftools?ref=badge_large)
