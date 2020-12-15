@@ -18,6 +18,8 @@
 #ifndef VOTCA_TOOLS_APPLICATION_H
 #define VOTCA_TOOLS_APPLICATION_H
 
+#include <fstream>
+
 // Third party includes
 #include <boost/program_options.hpp>
 
@@ -159,7 +161,9 @@ class Application {
 
   virtual void ShowHelpText(std::ostream &out);
 
-  void ShowManPage(std::ostream &out);
+  std::string ShowManPage();
+
+  void WriteManFile();
 
   void ShowTEXPage(std::ostream &out);
 

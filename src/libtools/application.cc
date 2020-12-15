@@ -58,26 +58,33 @@ void Application::ShowHelpText(std::ostream &out) {
   out << "\n\n" << VisibleOptions() << endl;
 }
 
-void Application::ShowManPage(std::ostream &out) {
-
-  out << boost::format(globals::man::header) % ProgramName() % VersionString();
-  out << boost::format(globals::man::name) % ProgramName() % globals::url;
-  out << boost::format(globals::man::synopsis) % ProgramName();
+std::string Application::ShowManPage() {
+  std::string version = (VersionString() != "") ? VersionString() : "1.0";
+  std::stringstream stream;
+  stream << boost::format(globals::man::header) % ProgramName() % version;
+  stream << boost::format(globals::man::name) % ProgramName() % globals::url;
+  stream << boost::format(globals::man::synopsis) % ProgramName();
   std::stringstream ss;
   HelpText(ss);
-  out << boost::format(globals::man::description) % ss.str();
-  out << boost::format(globals::man::options);
+  stream << boost::format(globals::man::description) % ss.str();
+  stream << boost::format(globals::man::options);
 
   for (const auto &option : _op_desc.options()) {
-    string format_name =
-        option->format_name() + " " + option->format_parameter();
-    boost::replace_all(format_name, "-", "\\-");
-    out << boost::format(globals::man::option) % format_name %
-               option->description();
+    string format_name = option->format_name() + option->format_parameter();
+    stream << boost::format(globals::man::option) % format_name %
+                  option->description();
   }
 
-  out << boost::format(globals::man::authors) % globals::email;
-  out << boost::format(globals::man::copyright) % globals::url;
+  stream << boost::format(globals::man::authors) % globals::email;
+  stream << boost::format(globals::man::copyright) % globals::url;
+  return stream.str();
+}
+
+void Application::WriteManFile() {
+  ofstream man_file;
+  man_file.open(ProgramName() + "_man.rst");
+  man_file << Application::ShowManPage();
+  man_file.close();
 }
 
 void Application::ShowTEXPage(std::ostream &out) {
@@ -107,6 +114,7 @@ int Application::Exec(int argc, char **argv) {
     AddProgramOptions()("verbose1", "  be very loud and noisy");
     AddProgramOptions()("verbose2,v", "  be extremly loud and noisy");
     AddProgramOptions("Hidden")("man", "  output man-formatted manual pages");
+    AddProgramOptions("Hidden")("manfile", " write to a rst formatted file the manual pages");
     AddProgramOptions("Hidden")("tex", "  output tex-formatted manual pages");
 
     Initialize();  // initialize program-specific parameters
@@ -127,7 +135,12 @@ int Application::Exec(int argc, char **argv) {
     }
 
     if (_op_vm.count("man")) {
-      ShowManPage(cout);
+      cout << ShowManPage();
+      return 0;
+    }
+
+    if (_op_vm.count("manfile")) {
+      WriteManFile();
       return 0;
     }
 
