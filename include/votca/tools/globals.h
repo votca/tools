@@ -66,6 +66,18 @@ struct globals {
     static std::string options;
   };
 
+  /// man pages in rst format strings
+  struct manrst {
+    static std::string option;
+    static std::string header;
+    static std::string name;
+    static std::string authors;
+    static std::string copyright;
+    static std::string synopsis;
+    static std::string description;
+    static std::string options;
+  };
+
   /// TEX pages format strings
   struct tex {
     static std::string section;

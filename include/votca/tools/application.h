@@ -161,7 +161,7 @@ class Application {
 
   virtual void ShowHelpText(std::ostream &out);
 
-  std::string ShowManPage();
+  void ShowManPage(std::ostream &out);
 
   void WriteManFile();
 
@@ -169,8 +169,12 @@ class Application {
 
   bool _continue_execution;
 
+  template <typename T>
+  std::string FormatManPage();
+
  private:
-  /// get input parameters from file, location may be specified in command line
+  /// get input parameters from file, location may be specified in command
+  /// line
   void ParseCommandLine(int argc, char **argv);
 
   /// program options without the Hidden group
