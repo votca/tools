@@ -50,6 +50,7 @@ BOOST_AUTO_TEST_CASE(write_man_page_test) {
   char* s1 = strdup(name);
   char* argv[1] = {s1};
   app.Exec(1, argv);
+  free(s1);
   BOOST_TEST(boost::filesystem::exists("app_man.rst"));
 }
 
