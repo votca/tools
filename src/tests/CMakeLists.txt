@@ -36,7 +36,9 @@ foreach(PROG
     test_akimaspline
     test_linspline
     test_unitconverter
-    test_eigenio_matrixmarket)
+    test_eigenio_matrixmarket
+    test_application
+    )
 
   file(GLOB ${PROG}_SOURCES ${PROG}*.cc)
   add_executable(unit_${PROG} ${${PROG}_SOURCES})
