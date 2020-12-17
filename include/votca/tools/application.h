@@ -169,7 +169,7 @@ class Application {
 
   bool _continue_execution;
 
-  template <typename T>
+  template <typename Format>
   std::string FormatManPage();
 
  private:

@@ -69,26 +69,26 @@ void Application::WriteManFile() {
   man_file.close();
 }
 
-template <typename T>
+template <typename Format>
 std::string Application::FormatManPage() {
   std::string version = (VersionString() != "") ? VersionString() : "1.0";
   std::stringstream stream;
-  stream << boost::format(T::header) % ProgramName() % version;
-  stream << boost::format(T::name) % ProgramName() % globals::url;
-  stream << boost::format(T::synopsis) % ProgramName();
+  stream << boost::format(Format::header) % ProgramName() % version;
+  stream << boost::format(Format::name) % ProgramName() % globals::url;
+  stream << boost::format(Format::synopsis) % ProgramName();
   std::stringstream ss;
   HelpText(ss);
-  stream << boost::format(T::description) % ss.str();
-  stream << boost::format(T::options);
+  stream << boost::format(Format::description) % ss.str();
+  stream << boost::format(Format::options);
 
   for (const auto &option : _op_desc.options()) {
     string format_name = option->format_name() + option->format_parameter();
     boost::replace_all(format_name, "-", "\\-");
-    stream << boost::format(T::option) % format_name % option->description();
+    stream << boost::format(Format::option) % format_name % option->description();
   }
 
-  stream << boost::format(T::authors) % globals::email;
-  stream << boost::format(T::copyright) % globals::url;
+  stream << boost::format(Format::authors) % globals::email;
+  stream << boost::format(Format::copyright) % globals::url;
 
   return stream.str();
 }
