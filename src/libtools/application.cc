@@ -121,7 +121,7 @@ int Application::Exec(int argc, char **argv) {
     AddProgramOptions()("verbose2,v", "  be extremly loud and noisy");
     AddProgramOptions("Hidden")("man", "  output man-formatted manual pages");
     AddProgramOptions("Hidden")(
-        "manrst", " write to a rst formatted file the manual pages");
+        "manrst", " write the manual pages to a rst formatted file ");
     AddProgramOptions("Hidden")("tex", "  output tex-formatted manual pages");
 
     Initialize();  // initialize program-specific parameters
