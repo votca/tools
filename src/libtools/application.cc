@@ -84,7 +84,8 @@ std::string Application::FormatManPage() {
   for (const auto &option : _op_desc.options()) {
     string format_name = option->format_name() + option->format_parameter();
     boost::replace_all(format_name, "-", "\\-");
-    stream << boost::format(Format::option) % format_name % option->description();
+    stream << boost::format(Format::option) % format_name %
+                  option->description();
   }
 
   stream << boost::format(Format::authors) % globals::email;
