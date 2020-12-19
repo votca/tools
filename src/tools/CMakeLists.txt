@@ -13,6 +13,13 @@ foreach(PROG votca_property)
      add_custom_target(${PROG}_manpage DEPENDS ${PROG}.man)
      add_dependencies(manpages ${PROG}_manpage)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROG}.man DESTINATION ${CMAKE_INSTALL_MANDIR}/man1 RENAME ${PROG}.1)
+     if(VOTCA_SPHINX_DIR)
+       add_custom_command(OUTPUT ${VOTCA_SPHINX_DIR}/tools/${PROG}.rst
+         COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${PROG} --man > ${VOTCA_SPHINX_DIR}/tools/${PROG}.rst
+         COMMENT "Building ${PROG} rst page"
+         DEPENDS ${PROG})
+       list(APPEND RST_PAGE ${VOTCA_SPHINX_DIR}/tools/${PROG}.rst)
+    endif()
   endif (BUILD_MANPAGES)
 
   if(ENABLE_TESTING)
@@ -20,3 +27,8 @@ foreach(PROG votca_property)
     set_tests_properties(integration_${PROG}Help PROPERTIES LABELS "tools;votca;integration")
   endif(ENABLE_TESTING)
 endforeach(PROG)
+
+if(VOTCA_SPHINX_DIR AND BUILD_MANPAGES)
+  file(MAKE_DIRECTORY ${VOTCA_SPHINX_DIR}/tools)
+  add_custom_target(doc-tools DEPENDS ${RST_PAGE})
+endif()
