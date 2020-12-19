@@ -40,7 +40,7 @@ BOOST_AUTO_TEST_CASE(write_man_page_test) {
     void Run() override { ; }
     void Initialize() override { ; }
     bool EvaluateOptions() override {
-      ofstream out;
+      std::ofstream out;
       ShowRstPage(out);
       return true;
     }
