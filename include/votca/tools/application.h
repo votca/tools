@@ -163,7 +163,7 @@ class Application {
 
   void ShowManPage(std::ostream &out);
 
-  void WriteManFile();
+  void ShowRstPage(std::ostream &out);
 
   void ShowTEXPage(std::ostream &out);
 

@@ -40,7 +40,8 @@ BOOST_AUTO_TEST_CASE(write_man_page_test) {
     void Run() override { ; }
     void Initialize() override { ; }
     bool EvaluateOptions() override {
-      WriteManFile();
+      ofstream out;
+      ShowRstPage(out);
       return true;
     }
   };
@@ -51,7 +52,6 @@ BOOST_AUTO_TEST_CASE(write_man_page_test) {
   char* argv[1] = {s1};
   app.Exec(1, argv);
   free(s1);
-  BOOST_TEST(boost::filesystem::exists("app_man.rst"));
 }
 
 BOOST_AUTO_TEST_SUITE_END()

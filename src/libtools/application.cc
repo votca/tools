@@ -62,16 +62,13 @@ void Application::ShowManPage(std::ostream &out) {
   out << FormatManPage<globals::man>();
 }
 
-void Application::WriteManFile() {
-  ofstream man_file;
-  man_file.open(ProgramName() + "_man.rst");
-  man_file << FormatManPage<globals::manrst>();
-  man_file.close();
+void Application::ShowRstPage(std::ostream &out) {
+  out << FormatManPage<globals::manrst>();
 }
 
 template <typename Format>
 std::string Application::FormatManPage() {
-  std::string version = (VersionString() != "") ? VersionString() : "1.0";
+  std::string version = ToolsVersionStr();
   std::stringstream stream;
   stream << boost::format(Format::header) % ProgramName() % version;
   stream << boost::format(Format::name) % ProgramName() % globals::url;
@@ -121,8 +118,7 @@ int Application::Exec(int argc, char **argv) {
     AddProgramOptions()("verbose1", "  be very loud and noisy");
     AddProgramOptions()("verbose2,v", "  be extremly loud and noisy");
     AddProgramOptions("Hidden")("man", "  output man-formatted manual pages");
-    AddProgramOptions("Hidden")(
-        "manrst", " write the manual pages to a rst formatted file ");
+    AddProgramOptions("Hidden")("rst", "  output rst-formatted manual pages ");
     AddProgramOptions("Hidden")("tex", "  output tex-formatted manual pages");
 
     Initialize();  // initialize program-specific parameters
@@ -147,8 +143,8 @@ int Application::Exec(int argc, char **argv) {
       return 0;
     }
 
-    if (_op_vm.count("manrst")) {
-      WriteManFile();
+    if (_op_vm.count("rst")) {
+      ShowRstPage(cout);
       return 0;
     }
 
