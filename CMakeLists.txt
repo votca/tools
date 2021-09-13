@@ -94,6 +94,7 @@ if(REQUIRE_MKL)
   find_package(MKL REQUIRED)
 endif()
 
+message(STATUS "Set MKL_THREAD_LAYER: ${MKL_THREAD_LAYER}")
 
 #openmp with clang smaller version 10 and user defined reductions is buggy https://bugs.llvm.org/show_bug.cgi?id=44134
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL 10.0)
