@@ -24,6 +24,7 @@ Version 2022-dev
 -  added optionshandler (#375)
 -  made bool conversion more restrictive (#366)
 -  made factory more general (#377)
+-  bump c++ to 17 (#382)
 
 Version 2021.2 (released XX.07.21)
 ==================================
